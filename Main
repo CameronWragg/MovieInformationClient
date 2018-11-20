@@ -34,7 +34,7 @@ namespace ImdbProgram
         {
             HttpClient httpClient = new HttpClient();
 
-            string response = httpClient.GetStringAsync(new Uri("http://www.omdbapi.com/" + "?t=skyfall" + "&apikey=8727e147")).Result;
+            string response = httpClient.GetStringAsync(new Uri("http://www.omdbapi.com/" + "?t=skyfall" + "&apikey=4195df77")).Result;
             ImdbEntity omdb = new JavaScriptSerializer().Deserialize<ImdbEntity>(response);
             Console.WriteLine(omdb.Actors);
             Console.WriteLine(omdb.Year);
