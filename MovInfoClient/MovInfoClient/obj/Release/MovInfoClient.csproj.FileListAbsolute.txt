@@ -1,0 +1,17 @@
+C:\Users\Cameron Wragg\source\repos\MovInfoClient\MovInfoClient\bin\Release\MovInfoClient.exe.config
+C:\Users\Cameron Wragg\source\repos\MovInfoClient\MovInfoClient\bin\Release\MovInfoClient.exe
+C:\Users\Cameron Wragg\source\repos\MovInfoClient\MovInfoClient\bin\Release\MovInfoClient.pdb
+C:\Users\Cameron Wragg\source\repos\MovInfoClient\MovInfoClient\bin\Release\Newtonsoft.Json.dll
+C:\Users\Cameron Wragg\source\repos\MovInfoClient\MovInfoClient\bin\Release\WebDriver.dll
+C:\Users\Cameron Wragg\source\repos\MovInfoClient\MovInfoClient\bin\Release\WebDriver.Support.dll
+C:\Users\Cameron Wragg\source\repos\MovInfoClient\MovInfoClient\bin\Release\Newtonsoft.Json.pdb
+C:\Users\Cameron Wragg\source\repos\MovInfoClient\MovInfoClient\bin\Release\Newtonsoft.Json.xml
+C:\Users\Cameron Wragg\source\repos\MovInfoClient\MovInfoClient\bin\Release\WebDriver.xml
+C:\Users\Cameron Wragg\source\repos\MovInfoClient\MovInfoClient\bin\Release\WebDriver.Support.xml
+C:\Users\Cameron Wragg\source\repos\MovInfoClient\MovInfoClient\obj\Release\MovInfoClient.Form1.resources
+C:\Users\Cameron Wragg\source\repos\MovInfoClient\MovInfoClient\obj\Release\MovInfoClient.Properties.Resources.resources
+C:\Users\Cameron Wragg\source\repos\MovInfoClient\MovInfoClient\obj\Release\MovInfoClient.csproj.GenerateResource.cache
+C:\Users\Cameron Wragg\source\repos\MovInfoClient\MovInfoClient\obj\Release\MovInfoClient.csproj.CoreCompileInputs.cache
+C:\Users\Cameron Wragg\source\repos\MovInfoClient\MovInfoClient\obj\Release\MovInfoClient.csproj.CopyComplete
+C:\Users\Cameron Wragg\source\repos\MovInfoClient\MovInfoClient\obj\Release\MovInfoClient.exe
+C:\Users\Cameron Wragg\source\repos\MovInfoClient\MovInfoClient\obj\Release\MovInfoClient.pdb

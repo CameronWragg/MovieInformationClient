@@ -20,30 +20,42 @@ namespace MovInfoClient
     public partial class Form1 : Form
     {
         public string currentSource;
+        public dbInfo dbResponse;
+        public FirefoxDriverService dService = FirefoxDriverService.CreateDefaultService();
+        public FirefoxOptions dOptions = new FirefoxOptions();
         public Form1()
         {
             InitializeComponent();
         }
-
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            dService.HideCommandPromptWindow = true;
+            dOptions.AddArgument("--headless");
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            FirefoxDriverService dService = FirefoxDriverService.CreateDefaultService();
-            dService.HideCommandPromptWindow = true;
-
-            FirefoxOptions dOptions = new FirefoxOptions();
-            dOptions.AddArgument("--headless");
-
             IWebDriver driver = new FirefoxDriver(dService, dOptions);
-            driver.Url = ("http://www.omdbapi.com/?apikey=4195df77&t=" + textBox1.Text);
-            currentSource = driver.FindElement(By.Id("json")).Text;
+            switch(comboBox1.SelectedItem)
+            {
+                case "Title":
+                    driver.Url = ("http://www.omdbapi.com/?apikey=4195df77&t=" + textBox1.Text);
+                    break;
+                case "imdbID":
+                    driver.Url = ("http://www.omdbapi.com/?apikey=4195df77&i=" + textBox1.Text);
+                    break;
+                default:
+                    driver.Url = ("http://www.omdbapi.com/?apikey=4195df77&t=" + textBox1.Text);
+                    break;
 
-            dbInfo dbResponse = JsonConvert.DeserializeObject<dbInfo>(currentSource);
+            }
+            currentSource = driver.FindElement(By.Id("json")).Text;
+            dbResponse = JsonConvert.DeserializeObject<dbInfo>(currentSource);
             richTextBox1.Text = dbResponse.title;
+            if (dbResponse.poster != null)
+            {
+                pictureBox1.LoadAsync(dbResponse.poster);
+            }
             driver.Quit();
         }
 
@@ -53,6 +65,11 @@ namespace MovInfoClient
             {
                 button1_Click(this, new EventArgs());
             }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            listBox1.Items.Add(dbResponse.title);
         }
     }
 }
