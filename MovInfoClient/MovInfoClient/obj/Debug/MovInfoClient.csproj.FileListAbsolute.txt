@@ -13,3 +13,6 @@ C:\Users\Cameron Wragg\source\repos\MovInfoClient\MovInfoClient\bin\Debug\WebDri
 C:\Users\Cameron Wragg\source\repos\MovInfoClient\MovInfoClient\bin\Debug\WebDriver.Support.xml
 C:\Users\Cameron Wragg\source\repos\MovInfoClient\MovInfoClient\obj\Debug\MovInfoClient.Form1.resources
 C:\Users\Cameron Wragg\source\repos\MovInfoClient\MovInfoClient\obj\Debug\MovInfoClient.csproj.CopyComplete
+C:\Users\Cameron Wragg\source\repos\MovInfoClient\MovInfoClient\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Cameron Wragg\source\repos\MovInfoClient\MovInfoClient\bin\Debug\Newtonsoft.Json.pdb
+C:\Users\Cameron Wragg\source\repos\MovInfoClient\MovInfoClient\bin\Debug\Newtonsoft.Json.xml

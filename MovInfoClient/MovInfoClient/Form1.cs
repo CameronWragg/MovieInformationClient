@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Input;
+using Newtonsoft.Json;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 
@@ -40,7 +41,9 @@ namespace MovInfoClient
             IWebDriver driver = new FirefoxDriver(dService, dOptions);
             driver.Url = ("http://www.omdbapi.com/?apikey=4195df77&t=" + textBox1.Text);
             currentSource = driver.FindElement(By.Id("json")).Text;
-            richTextBox1.Text = currentSource;
+
+            dbInfo dbResponse = JsonConvert.DeserializeObject<dbInfo>(currentSource);
+            richTextBox1.Text = dbResponse.title;
             driver.Quit();
         }
 
