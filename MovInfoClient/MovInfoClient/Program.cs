@@ -26,7 +26,7 @@ namespace MovInfoClient
         public string title { get; set; }
         public int year { get; set; }
         public string rated { get; set; }
-        public string release { get; set; }
+        public string Released { get; set; }
         public string runtime { get; set; }
         public string genre { get; set; }
         public string director { get; set; }
