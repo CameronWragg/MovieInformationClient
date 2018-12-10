@@ -16,3 +16,20 @@ C:\Users\Cameron Wragg\source\repos\MovInfoClient\MovInfoClient\obj\Debug\MovInf
 C:\Users\Cameron Wragg\source\repos\MovInfoClient\MovInfoClient\bin\Debug\Newtonsoft.Json.dll
 C:\Users\Cameron Wragg\source\repos\MovInfoClient\MovInfoClient\bin\Debug\Newtonsoft.Json.pdb
 C:\Users\Cameron Wragg\source\repos\MovInfoClient\MovInfoClient\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Sonny\Desktop\MovieInformationClient-master\MovInfoClient\MovInfoClient\bin\Debug\MovInfoClient.exe.config
+C:\Users\Sonny\Desktop\MovieInformationClient-master\MovInfoClient\MovInfoClient\bin\Debug\MovInfoClient.exe
+C:\Users\Sonny\Desktop\MovieInformationClient-master\MovInfoClient\MovInfoClient\bin\Debug\MovInfoClient.pdb
+C:\Users\Sonny\Desktop\MovieInformationClient-master\MovInfoClient\MovInfoClient\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Sonny\Desktop\MovieInformationClient-master\MovInfoClient\MovInfoClient\bin\Debug\WebDriver.dll
+C:\Users\Sonny\Desktop\MovieInformationClient-master\MovInfoClient\MovInfoClient\bin\Debug\WebDriver.Support.dll
+C:\Users\Sonny\Desktop\MovieInformationClient-master\MovInfoClient\MovInfoClient\bin\Debug\Newtonsoft.Json.pdb
+C:\Users\Sonny\Desktop\MovieInformationClient-master\MovInfoClient\MovInfoClient\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Sonny\Desktop\MovieInformationClient-master\MovInfoClient\MovInfoClient\bin\Debug\WebDriver.xml
+C:\Users\Sonny\Desktop\MovieInformationClient-master\MovInfoClient\MovInfoClient\bin\Debug\WebDriver.Support.xml
+C:\Users\Sonny\Desktop\MovieInformationClient-master\MovInfoClient\MovInfoClient\obj\Debug\MovInfoClient.csprojResolveAssemblyReference.cache
+C:\Users\Sonny\Desktop\MovieInformationClient-master\MovInfoClient\MovInfoClient\obj\Debug\MovInfoClient.Form1.resources
+C:\Users\Sonny\Desktop\MovieInformationClient-master\MovInfoClient\MovInfoClient\obj\Debug\MovInfoClient.Properties.Resources.resources
+C:\Users\Sonny\Desktop\MovieInformationClient-master\MovInfoClient\MovInfoClient\obj\Debug\MovInfoClient.csproj.GenerateResource.Cache
+C:\Users\Sonny\Desktop\MovieInformationClient-master\MovInfoClient\MovInfoClient\obj\Debug\MovInfoClient.csproj.CoreCompileInputs.cache
+C:\Users\Sonny\Desktop\MovieInformationClient-master\MovInfoClient\MovInfoClient\obj\Debug\MovInfoClient.exe
+C:\Users\Sonny\Desktop\MovieInformationClient-master\MovInfoClient\MovInfoClient\obj\Debug\MovInfoClient.pdb

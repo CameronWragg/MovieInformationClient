@@ -33,7 +33,7 @@ namespace MovInfoClient
             dOptions.AddArgument("--headless");
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void buttonQuery_Click(object sender, EventArgs e)
         {
             IWebDriver driver = new FirefoxDriver(dService, dOptions);
             switch(comboBox1.SelectedItem)
@@ -50,12 +50,22 @@ namespace MovInfoClient
 
             }
             currentSource = driver.FindElement(By.Id("json")).Text;
-            dbResponse = JsonConvert.DeserializeObject<dbInfo>(currentSource);
-            richTextBox1.Text = dbResponse.title;
-            if (dbResponse.poster != null)
+
+            try
             {
-                pictureBox1.LoadAsync(dbResponse.poster);
+                dbResponse = JsonConvert.DeserializeObject<dbInfo>(currentSource);
+                titleLabel.Text = dbResponse.title;
+                if (dbResponse.poster != null) { pictureBox1.LoadAsync(dbResponse.poster); }
+                releaseLabel.Text = (dbResponse.Released);
+                runtimeLabel.Text = (dbResponse.runtime);
+                genreLabel.Text = (dbResponse.genre);
+
+
+            } catch
+            {
+                MessageBox.Show("Title not found, or there was an error. Try again", "Error",MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+  
             driver.Quit();
         }
 
@@ -63,13 +73,20 @@ namespace MovInfoClient
         {
             if (e.KeyCode == System.Windows.Forms.Keys.Enter)
             {
-                button1_Click(this, new EventArgs());
+                buttonQuery_Click(this, new EventArgs());
             }
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
             listBox1.Items.Add(dbResponse.title);
+        }
+
+        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string loadBookmark = listBox1.SelectedItem.ToString();
+            textBox1.Text = (loadBookmark);
+            buttonQuery_Click(this, new EventArgs());
         }
     }
 }
