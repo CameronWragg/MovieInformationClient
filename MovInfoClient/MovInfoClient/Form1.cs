@@ -11,6 +11,7 @@ using System.Windows.Input;
 using Newtonsoft.Json;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
+using System.Collections;
 
 // This is the code for your desktop app.
 // Press Ctrl+F5 (or go to Debug > Start Without Debugging) to run your app.
@@ -23,14 +24,28 @@ namespace MovInfoClient
         public dbInfo dbResponse;
         public FirefoxDriverService dService = FirefoxDriverService.CreateDefaultService();
         public FirefoxOptions dOptions = new FirefoxOptions();
+
+        public List<String> bookmarks;
+
         public Form1()
         {
             InitializeComponent();
         }
+
         private void Form1_Load(object sender, EventArgs e)
         {
             dService.HideCommandPromptWindow = true;
             dOptions.AddArgument("--headless");
+
+            if (Properties.Settings.Default.bookmarks != null)
+            {
+                bookmarks = Properties.Settings.Default.bookmarks;
+                updateBookmarks();
+            }
+            else
+            {
+                bookmarks = new List<string>();
+            }
         }
 
         private void buttonQuery_Click(object sender, EventArgs e)
@@ -60,6 +75,14 @@ namespace MovInfoClient
                 runtimeLabel.Text = (dbResponse.runtime);
                 genreLabel.Text = (dbResponse.genre);
 
+                if (!bookmarks.Contains(dbResponse.title))
+                {
+                    button2.Text = "Add to Bookmarks";
+                }
+                else
+                {
+                    button2.Text = "Remove from Bookmarks";
+                }
 
             } catch
             {
@@ -79,7 +102,17 @@ namespace MovInfoClient
 
         private void button2_Click(object sender, EventArgs e)
         {
-            listBox1.Items.Add(dbResponse.title);
+            if (!bookmarks.Contains(dbResponse.title))
+            { 
+                bookmarks.Add(dbResponse.title);
+                button2.Text = "Remove from Bookmarks";
+            }
+            else
+            {
+                bookmarks.Remove(dbResponse.title);
+                button2.Text = "Add to Bookmarks";
+            }
+            updateBookmarks();
         }
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -87,6 +120,19 @@ namespace MovInfoClient
             string loadBookmark = listBox1.SelectedItem.ToString();
             textBox1.Text = (loadBookmark);
             buttonQuery_Click(this, new EventArgs());
+        }
+
+        public void updateBookmarks()
+        {
+            listBox1.Items.Clear();
+
+            foreach(string bmark in bookmarks)
+            {
+                listBox1.Items.Add(bmark);
+            }
+
+            Properties.Settings.Default.bookmarks = bookmarks;
+            Properties.Settings.Default.Save();
         }
     }
 }
