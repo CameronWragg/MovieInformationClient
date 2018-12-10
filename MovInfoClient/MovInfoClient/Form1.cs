@@ -75,6 +75,14 @@ namespace MovInfoClient
                 runtimeLabel.Text = (dbResponse.runtime);
                 genreLabel.Text = (dbResponse.genre);
 
+                if (!bookmarks.Contains(dbResponse.title))
+                {
+                    button2.Text = "Add to Bookmarks";
+                }
+                else
+                {
+                    button2.Text = "Remove from Bookmarks";
+                }
 
             } catch
             {
@@ -94,7 +102,16 @@ namespace MovInfoClient
 
         private void button2_Click(object sender, EventArgs e)
         {
-            bookmarks.Add(dbResponse.title);
+            if (!bookmarks.Contains(dbResponse.title))
+            { 
+                bookmarks.Add(dbResponse.title);
+                button2.Text = "Remove from Bookmarks";
+            }
+            else
+            {
+                bookmarks.Remove(dbResponse.title);
+                button2.Text = "Add to Bookmarks";
+            }
             updateBookmarks();
         }
 
