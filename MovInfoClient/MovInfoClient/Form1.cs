@@ -88,7 +88,7 @@ namespace MovInfoClient
 
                     foreach (dbInfo film in dbSearchResult.search)
                     {
-                        listSearchResults.Items.Add(film.title);
+                        listSearchResults.Items.Add(film.title + " (" + film.year + ")");
                     }
 
                     if (pageNo == 0)
@@ -125,7 +125,7 @@ namespace MovInfoClient
                     runtimeLabel.Text = (dbResponse.runtime);
                     genreLabel.Text = (dbResponse.genre);
 
-                    if (!bookmarks.Contains(dbResponse.title))
+                    if (!bookmarks.Contains(dbResponse.title + " (" + dbResponse.year + ")"))
                     {
                         button2.Text = "Add to Bookmarks";
                     }
@@ -154,14 +154,14 @@ namespace MovInfoClient
 
         private void button2_Click(object sender, EventArgs e)
         {
-            if (!bookmarks.Contains(dbResponse.title))
+            if (!bookmarks.Contains(dbResponse.title + " (" + dbResponse.year + ")"))
             { 
-                bookmarks.Add(dbResponse.title);
+                bookmarks.Add(dbResponse.title + " (" + dbResponse.year + ")");
                 button2.Text = "Remove from Bookmarks";
             }
             else
             {
-                bookmarks.Remove(dbResponse.title);
+                bookmarks.Remove(dbResponse.title + " (" + dbResponse.year + ")");
                 button2.Text = "Add to Bookmarks";
             }
             updateBookmarks();
@@ -170,6 +170,7 @@ namespace MovInfoClient
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             string loadBookmark = listBookmarks.SelectedItem.ToString();
+            loadBookmark = loadBookmark.Substring(0, loadBookmark.Length - 6);
             textBox1.Text = (loadBookmark);
             comboBox1.SelectedItem = "Title";
             buttonQuery_Click(this, new EventArgs());
@@ -178,6 +179,7 @@ namespace MovInfoClient
         private void listSearchResults_SelectedIndexChanged(object sender, EventArgs e)
         {
             string loadResult = listSearchResults.SelectedItem.ToString();
+            loadResult = loadResult.Substring(0, loadResult.Length - 6);
             textBox1.Text = (loadResult);
             comboBox1.SelectedItem = "Title";
             buttonQuery_Click(this, new EventArgs());
