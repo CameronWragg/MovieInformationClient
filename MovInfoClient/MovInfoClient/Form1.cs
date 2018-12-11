@@ -27,6 +27,7 @@ namespace MovInfoClient
 
         public List<String> bookmarks;
         private dbSearch dbSearchResult;
+        private string search;
         private int pageNo = 1;
         private int totalPages = 0;
 
@@ -56,6 +57,12 @@ namespace MovInfoClient
         private void buttonQuery_Click(object sender, EventArgs e)
         {
             IWebDriver driver = new FirefoxDriver(dService, dOptions);
+
+            if(textBox1.Text != search)
+            {
+                pageNo = 1;
+            }
+
             switch(comboBox1.SelectedItem)
             {
                 case "Search":
@@ -80,6 +87,7 @@ namespace MovInfoClient
                 {
                     dbSearchResult = JsonConvert.DeserializeObject<dbSearch>(currentSource);
 
+                    search = textBox1.Text;
                     txtResults.Text = dbSearchResult.totalResults.ToString();
 
                     totalPages = (int)Math.Ceiling((decimal)dbSearchResult.totalResults / 10);
@@ -108,6 +116,8 @@ namespace MovInfoClient
                     {
                         btnSearchForward.Enabled = false;
                     }
+
+                    txtPage.Text = pageNo.ToString();
                 }
                 catch
                 {
@@ -202,6 +212,7 @@ namespace MovInfoClient
         {
             pageNo += 1;
             comboBox1.SelectedItem = "Search";
+            textBox1.Text = search;
             buttonQuery_Click(this, new EventArgs());
         }
 
@@ -209,12 +220,8 @@ namespace MovInfoClient
         {
             pageNo -= 1;
             comboBox1.SelectedItem = "Search";
+            textBox1.Text = search;
             buttonQuery_Click(this, new EventArgs());
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-            pageNo = 1;
         }
     }
 }
