@@ -26,6 +26,9 @@ namespace MovInfoClient
         public FirefoxOptions dOptions = new FirefoxOptions();
 
         public List<String> bookmarks;
+        private dbSearch dbSearchResult;
+        private int pageNo = 1;
+        private int totalPages = 0;
 
         public Form1()
         {
@@ -56,7 +59,7 @@ namespace MovInfoClient
             switch(comboBox1.SelectedItem)
             {
                 case "Search":
-                    driver.Url = ("http://www.omdbapi.com/?apikey=4195df77&s=" + textBox1.Text);
+                    driver.Url = ("http://www.omdbapi.com/?apikey=4195df77&s=" + textBox1.Text + "&page=" + pageNo.ToString());
                     break;
                 case "Title":
                     driver.Url = ("http://www.omdbapi.com/?apikey=4195df77&t=" + textBox1.Text);
@@ -75,14 +78,35 @@ namespace MovInfoClient
             {
                 try
                 {
-                    dbSearch dbResult = JsonConvert.DeserializeObject<dbSearch>(currentSource);
+                    dbSearchResult = JsonConvert.DeserializeObject<dbSearch>(currentSource);
 
-                    txtResults.Text = dbResult.totalResults;
+                    txtResults.Text = dbSearchResult.totalResults.ToString();
+
+                    totalPages = (int)Math.Ceiling((decimal)dbSearchResult.totalResults / 10);
 
                     listSearchResults.Items.Clear();
-                    foreach(dbInfo film in dbResult.search)
+
+                    foreach (dbInfo film in dbSearchResult.search)
                     {
                         listSearchResults.Items.Add(film.title);
+                    }
+
+                    if (pageNo == 0)
+                    {
+                        btnSearchBack.Enabled = false;
+                    }
+                    else
+                    {
+                        btnSearchBack.Enabled = true;
+                    }
+
+                    if (pageNo < totalPages)
+                    {
+                        btnSearchForward.Enabled = true;
+                    }
+                    else
+                    {
+                        btnSearchForward.Enabled = false;
                     }
                 }
                 catch
@@ -172,6 +196,23 @@ namespace MovInfoClient
             Properties.Settings.Default.Save();
         }
 
-        
+        private void btnSearchForward_Click(object sender, EventArgs e)
+        {
+            pageNo += 1;
+            comboBox1.SelectedItem = "Search";
+            buttonQuery_Click(this, new EventArgs());
+        }
+
+        private void btnSearchBack_Click(object sender, EventArgs e)
+        {
+            pageNo -= 1;
+            comboBox1.SelectedItem = "Search";
+            buttonQuery_Click(this, new EventArgs());
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            pageNo = 1;
+        }
     }
 }

@@ -46,6 +46,9 @@ namespace MovInfoClient
             this.listSearchResults = new System.Windows.Forms.ListBox();
             this.label4 = new System.Windows.Forms.Label();
             this.txtResults = new System.Windows.Forms.Label();
+            this.btnSearchBack = new System.Windows.Forms.Button();
+            this.btnSearchForward = new System.Windows.Forms.Button();
+            this.txtPage = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -65,6 +68,7 @@ namespace MovInfoClient
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(544, 25);
             this.textBox1.TabIndex = 1;
+            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             this.textBox1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox1_KeyDown);
             // 
             // label1
@@ -193,7 +197,7 @@ namespace MovInfoClient
             this.listSearchResults.ItemHeight = 17;
             this.listSearchResults.Location = new System.Drawing.Point(690, 41);
             this.listSearchResults.Name = "listSearchResults";
-            this.listSearchResults.Size = new System.Drawing.Size(225, 293);
+            this.listSearchResults.Size = new System.Drawing.Size(225, 259);
             this.listSearchResults.TabIndex = 15;
             this.listSearchResults.SelectedIndexChanged += new System.EventHandler(this.listSearchResults_SelectedIndexChanged);
             // 
@@ -215,11 +219,45 @@ namespace MovInfoClient
             this.txtResults.TabIndex = 17;
             this.txtResults.Text = "placeholder";
             // 
+            // btnSearchBack
+            // 
+            this.btnSearchBack.Enabled = false;
+            this.btnSearchBack.Location = new System.Drawing.Point(691, 307);
+            this.btnSearchBack.Name = "btnSearchBack";
+            this.btnSearchBack.Size = new System.Drawing.Size(75, 23);
+            this.btnSearchBack.TabIndex = 18;
+            this.btnSearchBack.Text = "<";
+            this.btnSearchBack.UseVisualStyleBackColor = true;
+            this.btnSearchBack.Click += new System.EventHandler(this.btnSearchBack_Click);
+            // 
+            // btnSearchForward
+            // 
+            this.btnSearchForward.Enabled = false;
+            this.btnSearchForward.Location = new System.Drawing.Point(840, 307);
+            this.btnSearchForward.Name = "btnSearchForward";
+            this.btnSearchForward.Size = new System.Drawing.Size(75, 23);
+            this.btnSearchForward.TabIndex = 19;
+            this.btnSearchForward.Text = ">";
+            this.btnSearchForward.UseVisualStyleBackColor = true;
+            this.btnSearchForward.Click += new System.EventHandler(this.btnSearchForward_Click);
+            // 
+            // txtPage
+            // 
+            this.txtPage.AutoSize = true;
+            this.txtPage.Location = new System.Drawing.Point(793, 310);
+            this.txtPage.Name = "txtPage";
+            this.txtPage.Size = new System.Drawing.Size(16, 17);
+            this.txtPage.TabIndex = 20;
+            this.txtPage.Text = "1";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(927, 346);
+            this.Controls.Add(this.txtPage);
+            this.Controls.Add(this.btnSearchForward);
+            this.Controls.Add(this.btnSearchBack);
             this.Controls.Add(this.txtResults);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.listSearchResults);
@@ -268,6 +306,9 @@ namespace MovInfoClient
         private System.Windows.Forms.ListBox listSearchResults;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label txtResults;
+        private System.Windows.Forms.Button btnSearchBack;
+        private System.Windows.Forms.Button btnSearchForward;
+        private System.Windows.Forms.Label txtPage;
     }
 }
 

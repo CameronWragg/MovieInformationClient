@@ -24,7 +24,7 @@ namespace MovInfoClient
     public class dbInfo
     {
         public string title { get; set; }
-        public int year { get; set; }
+        public string year { get; set; }
         public string rated { get; set; }
         public string Released { get; set; }
         public string runtime { get; set; }
@@ -53,7 +53,7 @@ namespace MovInfoClient
     public class dbSearch
     {
         public List<dbInfo> search { get; set; }
-        public string totalResults { get; set; }
+        public int totalResults { get; set; }
         public string response { get; set; }
     }
 }
