@@ -49,4 +49,11 @@ namespace MovInfoClient
         public string website { get; set; }
         public string response { get; set; }
     }
+
+    public class dbSearch
+    {
+        public List<dbInfo> search { get; set; }
+        public string totalResults { get; set; }
+        public string response { get; set; }
+    }
 }

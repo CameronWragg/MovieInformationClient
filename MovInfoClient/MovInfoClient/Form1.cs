@@ -47,7 +47,7 @@ namespace MovInfoClient
                 bookmarks = new List<string>();
             }
 
-            comboBox1.SelectedItem = "Title";
+            comboBox1.SelectedItem = "Search";
         }
 
         private void buttonQuery_Click(object sender, EventArgs e)
@@ -55,6 +55,9 @@ namespace MovInfoClient
             IWebDriver driver = new FirefoxDriver(dService, dOptions);
             switch(comboBox1.SelectedItem)
             {
+                case "Search":
+                    driver.Url = ("http://www.omdbapi.com/?apikey=4195df77&s=" + textBox1.Text);
+                    break;
                 case "Title":
                     driver.Url = ("http://www.omdbapi.com/?apikey=4195df77&t=" + textBox1.Text);
                     break;
@@ -62,33 +65,56 @@ namespace MovInfoClient
                     driver.Url = ("http://www.omdbapi.com/?apikey=4195df77&i=" + textBox1.Text);
                     break;
                 default:
-                    driver.Url = ("http://www.omdbapi.com/?apikey=4195df77&t=" + textBox1.Text);
+                    driver.Url = ("http://www.omdbapi.com/?apikey=4195df77&s=" + textBox1.Text);
                     break;
 
             }
             currentSource = driver.FindElement(By.Id("json")).Text;
 
-            try
+            if (comboBox1.SelectedItem.ToString() == "Search")
             {
-                dbResponse = JsonConvert.DeserializeObject<dbInfo>(currentSource);
-                titleLabel.Text = dbResponse.title;
-                if (dbResponse.poster != null) { pictureBox1.LoadAsync(dbResponse.poster); }
-                releaseLabel.Text = (dbResponse.Released);
-                runtimeLabel.Text = (dbResponse.runtime);
-                genreLabel.Text = (dbResponse.genre);
-
-                if (!bookmarks.Contains(dbResponse.title))
+                try
                 {
-                    button2.Text = "Add to Bookmarks";
-                }
-                else
-                {
-                    button2.Text = "Remove from Bookmarks";
-                }
+                    dbSearch dbResult = JsonConvert.DeserializeObject<dbSearch>(currentSource);
 
-            } catch
+                    txtResults.Text = dbResult.totalResults;
+
+                    listSearchResults.Items.Clear();
+                    foreach(dbInfo film in dbResult.search)
+                    {
+                        listSearchResults.Items.Add(film.title);
+                    }
+                }
+                catch
+                {
+                    MessageBox.Show("An error occurred. Please try again", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            else
             {
-                MessageBox.Show("Title not found, or there was an error. Try again", "Error",MessageBoxButtons.OK, MessageBoxIcon.Error);
+                try
+                {
+                    dbResponse = JsonConvert.DeserializeObject<dbInfo>(currentSource);
+                    titleLabel.Text = dbResponse.title;
+                    if (dbResponse.poster != null) { pictureBox1.LoadAsync(dbResponse.poster); }
+                    releaseLabel.Text = (dbResponse.Released);
+                    runtimeLabel.Text = (dbResponse.runtime);
+                    genreLabel.Text = (dbResponse.genre);
+
+                    if (!bookmarks.Contains(dbResponse.title))
+                    {
+                        button2.Text = "Add to Bookmarks";
+                    }
+                    else
+                    {
+                        button2.Text = "Remove from Bookmarks";
+                    }
+
+                }
+                catch
+                {
+                    MessageBox.Show("Title not found, or there was an error. Try again", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
   
             driver.Quit();
@@ -119,22 +145,33 @@ namespace MovInfoClient
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string loadBookmark = listBox1.SelectedItem.ToString();
+            string loadBookmark = listBookmarks.SelectedItem.ToString();
             textBox1.Text = (loadBookmark);
+            comboBox1.SelectedItem = "Title";
+            buttonQuery_Click(this, new EventArgs());
+        }
+
+        private void listSearchResults_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string loadResult = listSearchResults.SelectedItem.ToString();
+            textBox1.Text = (loadResult);
+            comboBox1.SelectedItem = "Title";
             buttonQuery_Click(this, new EventArgs());
         }
 
         public void updateBookmarks()
         {
-            listBox1.Items.Clear();
+            listBookmarks.Items.Clear();
 
             foreach(string bmark in bookmarks)
             {
-                listBox1.Items.Add(bmark);
+                listBookmarks.Items.Add(bmark);
             }
 
             Properties.Settings.Default.bookmarks = bookmarks;
             Properties.Settings.Default.Save();
         }
+
+        
     }
 }
