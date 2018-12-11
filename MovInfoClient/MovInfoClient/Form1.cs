@@ -134,5 +134,12 @@ namespace MovInfoClient
             Properties.Settings.Default.bookmarks = bookmarks;
             Properties.Settings.Default.Save();
         }
+
+        private void listBox1_DoubleClick(object sender, EventArgs e)
+        {
+            string loadBookmark = listBox1.SelectedItem.ToString();
+            textBox1.Text = (loadBookmark);
+            buttonQuery_Click(this, new EventArgs());
+        }
     }
 }
