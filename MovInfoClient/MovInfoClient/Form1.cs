@@ -46,6 +46,8 @@ namespace MovInfoClient
             {
                 bookmarks = new List<string>();
             }
+
+            comboBox1.SelectedItem = "Title";
         }
 
         private void buttonQuery_Click(object sender, EventArgs e)
