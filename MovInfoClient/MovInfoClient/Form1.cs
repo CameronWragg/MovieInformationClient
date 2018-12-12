@@ -84,7 +84,7 @@ namespace MovInfoClient
                     
                     currentSource = driver.FindElement(By.Id("json")).Text;
                     
-                    if (comboBox1.SelectedItem.ToString() == "Search")
+                    if (comboBox1.SelectedIndex == 0)
                     {
                         try
                         {
@@ -92,7 +92,6 @@ namespace MovInfoClient
 
                             search = textBox1.Text;
                             txtResults.Text = dbSearchResult.totalResults.ToString();
-
                             totalPages = (int)Math.Ceiling((decimal)dbSearchResult.totalResults / 10);
 
                             listSearchResults.Items.Clear();
@@ -151,15 +150,34 @@ namespace MovInfoClient
                 case 1: //TMDb SECTION
                     Uri homeAddr = new Uri("https://api.themoviedb.org/3/");
                     RestRequest tmdbRequest = new RestRequest(Method.GET);
+                    RestClient tmdbClient;
+                    MovieSearchResult tmdbResp;
                     tmdbRequest.RequestFormat = DataFormat.Json;
                     IRestResponse tmdbResponse;
                         
                     switch (comboBox1.SelectedIndex)
                     {
-                        case 1:
-                            RestClient tmdbClient = new RestClient(homeAddr + "search/movie" + getApi.tmdbApiKey + "&language=en-US&query=" + textBox1.Text + "&page=1&include_adult=false");
+                        case 0:
+                            tmdbClient = new RestClient(homeAddr + "search/movie" + getApi.tmdbApiKey + "&language=en-US&query=" + textBox1.Text + "&page=" + pageNo + "&include_adult=false");
                             tmdbResponse = tmdbClient.Execute(tmdbRequest);
-                            MovieSearchResult tmdbResp = JsonConvert.DeserializeObject<MovieSearchResult>(tmdbResponse.Content);
+                            tmdbResp = JsonConvert.DeserializeObject<MovieSearchResult>(tmdbResponse.Content);
+
+                            search = textBox1.Text;
+                            txtResults.Text = tmdbResp.total_results.ToString();
+                            totalPages = tmdbResp.total_pages;
+
+                            listSearchResults.Items.Clear();
+
+                            foreach(Movie film in tmdbResp.results)
+                            {
+                                listSearchResults.Items.Add(film.title + " (" + film.release_date.Substring(0, 4) + ")");
+                            }
+
+                            break;
+                        case 1:
+                            tmdbClient = new RestClient(homeAddr + "search/movie" + getApi.tmdbApiKey + "&language=en-US&query=" + textBox1.Text + "&page=1&include_adult=false");
+                            tmdbResponse = tmdbClient.Execute(tmdbRequest);
+                            tmdbResp = JsonConvert.DeserializeObject<MovieSearchResult>(tmdbResponse.Content);
 
                             titleLabel.Text = tmdbResp.results[0].title;
                             releaseLabel.Text = tmdbResp.results[0].release_date;
@@ -171,7 +189,6 @@ namespace MovInfoClient
                             richTextBox1.Text = tmdbResp.results[0].overview;
 
                             break;
-
                         case 2:
                             RestClient tmdbIdClient = new RestClient(homeAddr + "find/" + textBox1.Text + getApi.tmdbApiKey + "&language=en-US&external_source=imdb_id");
                             tmdbResponse = tmdbIdClient.Execute(tmdbRequest);
@@ -211,14 +228,14 @@ namespace MovInfoClient
 
         private void button2_Click(object sender, EventArgs e)
         {
-            if (!bookmarks.Contains(dbResponse.title))
+            if (!bookmarks.Contains(titleLabel.Text))
             { 
-                bookmarks.Add(dbResponse.title);
+                bookmarks.Add(titleLabel.Text);
                 button2.Text = "Remove from Bookmarks";
             }
             else
             {
-                bookmarks.Remove(dbResponse.title);
+                bookmarks.Remove(titleLabel.Text);
                 button2.Text = "Add to Bookmarks";
             }
             updateBookmarks();
