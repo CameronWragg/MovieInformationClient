@@ -12,6 +12,7 @@ using Newtonsoft.Json;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using System.Collections;
+using RestSharp;
 
 // This is the code for your desktop app.
 // Press Ctrl+F5 (or go to Debug > Start Without Debugging) to run your app.
@@ -24,6 +25,7 @@ namespace MovInfoClient
         public dbInfo dbResponse;
         public FirefoxDriverService dService = FirefoxDriverService.CreateDefaultService();
         public FirefoxOptions dOptions = new FirefoxOptions();
+        public api getApi = new api();
 
         public List<String> bookmarks;
         private dbSearch dbSearchResult;
@@ -51,107 +53,152 @@ namespace MovInfoClient
                 bookmarks = new List<string>();
             }
 
-            comboBox1.SelectedItem = "Search";
+            comboBox1.SelectedIndex = 0;
+            comboBox2.SelectedIndex = 0;
         }
 
         private void buttonQuery_Click(object sender, EventArgs e)
         {
-            IWebDriver driver = new FirefoxDriver(dService, dOptions);
-
-            if(textBox1.Text != search)
+            switch (comboBox2.SelectedIndex)
             {
-                pageNo = 1;
-            }
+                case 0: //OMDb SECTION
+                    IWebDriver driver = new FirefoxDriver(dService, dOptions);
 
-            switch(comboBox1.SelectedItem)
-            {
-                case "Search":
-                    driver.Url = ("http://www.omdbapi.com/?apikey=4195df77&s=" + textBox1.Text + "&page=" + pageNo.ToString());
-                    break;
-                case "Title":
-                    driver.Url = ("http://www.omdbapi.com/?apikey=4195df77&t=" + textBox1.Text);
-                    break;
-                case "imdbID":
-                    driver.Url = ("http://www.omdbapi.com/?apikey=4195df77&i=" + textBox1.Text);
-                    break;
-                default:
-                    driver.Url = ("http://www.omdbapi.com/?apikey=4195df77&s=" + textBox1.Text);
-                    break;
-
-            }
-            currentSource = driver.FindElement(By.Id("json")).Text;
-
-            if (comboBox1.SelectedItem.ToString() == "Search")
-            {
-                try
-                {
-                    dbSearchResult = JsonConvert.DeserializeObject<dbSearch>(currentSource);
-
-                    search = textBox1.Text;
-                    txtResults.Text = dbSearchResult.totalResults.ToString();
-
-                    totalPages = (int)Math.Ceiling((decimal)dbSearchResult.totalResults / 10);
-
-                    listSearchResults.Items.Clear();
-
-                    foreach (dbInfo film in dbSearchResult.search)
+                    if(textBox1.Text != search)
                     {
-                        listSearchResults.Items.Add(film.title + " (" + film.year + ")");
+                        pageNo = 1;
                     }
 
-                    if (pageNo == 0)
+                    switch(comboBox1.SelectedIndex)
                     {
-                        btnSearchBack.Enabled = false;
+                        case 0:
+                            driver.Url = ("http://www.omdbapi.com/?apikey=4195df77&s=" + textBox1.Text + "&page=" + pageNo.ToString());
+                            break;
+                        case 1:
+                            driver.Url = ("http://www.omdbapi.com/?apikey=4195df77&t=" + textBox1.Text);
+                            break;
+                        case 2:
+                            driver.Url = ("http://www.omdbapi.com/?apikey=4195df77&i=" + textBox1.Text);
+                            break;
+                    }
+                    
+                    currentSource = driver.FindElement(By.Id("json")).Text;
+                    
+                    if (comboBox1.SelectedItem.ToString() == "Search")
+                    {
+                        try
+                        {
+                            dbSearchResult = JsonConvert.DeserializeObject<dbSearch>(currentSource);
+
+                            search = textBox1.Text;
+                            txtResults.Text = dbSearchResult.totalResults.ToString();
+
+                            totalPages = (int)Math.Ceiling((decimal)dbSearchResult.totalResults / 10);
+
+                            listSearchResults.Items.Clear();
+
+                            foreach (dbInfo film in dbSearchResult.search)
+                            {
+                                listSearchResults.Items.Add(film.title + " (" + film.year + ")");
+                            }
+
+                            if (pageNo == 0)
+                            {
+                                btnSearchBack.Enabled = false;
+                            }
+                            else
+                            {
+                                btnSearchBack.Enabled = true;
+                            }
+
+                            if (pageNo < totalPages)
+                            {
+                                btnSearchForward.Enabled = true;
+                            }
+                            else
+                            {
+                                btnSearchForward.Enabled = false;
+                            }
+
+                            txtPage.Text = pageNo.ToString();
+                        }
+                        catch
+                        {
+                            MessageBox.Show("An error occurred. Please try again", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
                     }
                     else
                     {
-                        btnSearchBack.Enabled = true;
+                        try
+                        {
+                            dbResponse = JsonConvert.DeserializeObject<dbInfo>(currentSource);
+                            titleLabel.Text = dbResponse.title;
+                            if (dbResponse.poster != null) { pictureBox1.LoadAsync(dbResponse.poster); }
+                            releaseLabel.Text = (dbResponse.Released);
+                            runtimeLabel.Text = (dbResponse.runtime);
+                            genreLabel.Text = (dbResponse.genre);
+
+                            if (!bookmarks.Contains(dbResponse.title + " (" + dbResponse.year + ")"))
+                            {
+                                button2.Text = "Add to Bookmarks";
+                            }
+                            else
+                            {
+                                button2.Text = "Remove from Bookmarks";
+                            }
+
+                        }
+                        catch
+                        {
+                            MessageBox.Show("Title not found, or there was an error. Try again", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
                     }
 
-                    if (pageNo < totalPages)
+                    driver.Quit();
+                    break;
+                    
+                case 1: //TMDb SECTION
+                    Uri homeAddr = new Uri("https://api.themoviedb.org/3/");
+                    RestRequest tmdbRequest = new RestRequest(Method.GET);
+                    tmdbRequest.RequestFormat = DataFormat.Json;
+                    IRestResponse tmdbResponse;
+                        
+                    switch (comboBox1.SelectedIndex)
                     {
-                        btnSearchForward.Enabled = true;
-                    }
-                    else
-                    {
-                        btnSearchForward.Enabled = false;
-                    }
+                        case 0:
+                            RestClient tmdbClient = new RestClient(homeAddr + "search/movie" + getApi.tmdbApiKey + "&language=en-US&query=" + textBox1.Text + "&page=1&include_adult=false");
+                            tmdbResponse = tmdbClient.Execute(tmdbRequest);
+                            MovieSearchResult tmdbResp = JsonConvert.DeserializeObject<MovieSearchResult>(tmdbResponse.Content);
 
-                    txtPage.Text = pageNo.ToString();
-                }
-                catch
-                {
-                    MessageBox.Show("An error occurred. Please try again", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                            titleLabel.Text = tmdbResp.results[0].title;
+                            releaseLabel.Text = tmdbResp.results[0].release_date;
+                            if (tmdbResp.results[0].poster_path != null)
+                            {
+                                pictureBox1.LoadAsync("http://image.tmdb.org/t/p/w300//" + tmdbResp.results[0].poster_path);
+                            }
+
+                            richTextBox1.Text = tmdbResp.results[0].overview;
+
+                            break;
+
+                        case 1:
+                            RestClient tmdbIdClient = new RestClient(homeAddr + "find/" + textBox1.Text + getApi.tmdbApiKey + "&language=en-US&external_source=imdb_id");
+                            tmdbResponse = tmdbIdClient.Execute(tmdbRequest);
+                            MovieResult tmdbIdResp = JsonConvert.DeserializeObject<MovieResult>(tmdbResponse.Content);
+                                
+                            titleLabel.Text = tmdbIdResp.movie_results[0].title;
+                            releaseLabel.Text = tmdbIdResp.movie_results[0].release_date;
+                            if (tmdbIdResp.movie_results[0].poster_path != null)
+                            {
+                                pictureBox1.LoadAsync("http://image.tmdb.org/t/p/w300//" + tmdbIdResp.movie_results[0].poster_path);
+                            }
+
+                            richTextBox1.Text = tmdbIdResp.movie_results[0].overview;
+
+                            break;
+                    }
+                    break;
             }
-            else
-            {
-                try
-                {
-                    dbResponse = JsonConvert.DeserializeObject<dbInfo>(currentSource);
-                    titleLabel.Text = dbResponse.title;
-                    if (dbResponse.poster != null) { pictureBox1.LoadAsync(dbResponse.poster); }
-                    releaseLabel.Text = (dbResponse.Released);
-                    runtimeLabel.Text = (dbResponse.runtime);
-                    genreLabel.Text = (dbResponse.genre);
-
-                    if (!bookmarks.Contains(dbResponse.title + " (" + dbResponse.year + ")"))
-                    {
-                        button2.Text = "Add to Bookmarks";
-                    }
-                    else
-                    {
-                        button2.Text = "Remove from Bookmarks";
-                    }
-
-                }
-                catch
-                {
-                    MessageBox.Show("Title not found, or there was an error. Try again", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-  
-            driver.Quit();
         }
 
         private void textBox1_KeyDown(object sender, KeyEventArgs e)

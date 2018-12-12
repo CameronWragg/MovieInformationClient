@@ -43,6 +43,7 @@ namespace MovInfoClient
             this.genreLabel = new System.Windows.Forms.Label();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.label3 = new System.Windows.Forms.Label();
+            this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.listSearchResults = new System.Windows.Forms.ListBox();
             this.label4 = new System.Windows.Forms.Label();
             this.txtResults = new System.Windows.Forms.Label();
@@ -97,7 +98,7 @@ namespace MovInfoClient
             this.comboBox1.Items.AddRange(new object[] {
             "Search",
             "Title",
-            "imdbID"});
+            "imdb ID"});
             this.comboBox1.Location = new System.Drawing.Point(530, 57);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(154, 25);
@@ -189,6 +190,18 @@ namespace MovInfoClient
             this.label3.Size = new System.Drawing.Size(86, 17);
             this.label3.TabIndex = 14;
             this.label3.Text = "Bookmarks:";
+            // 
+            // comboBox2
+            // 
+            this.comboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox2.FormattingEnabled = true;
+            this.comboBox2.Items.AddRange(new object[] {
+            "OMDb",
+            "TMDb"});
+            this.comboBox2.Location = new System.Drawing.Point(569, 88);
+            this.comboBox2.Name = "comboBox2";
+            this.comboBox2.Size = new System.Drawing.Size(115, 25);
+            this.comboBox2.TabIndex = 15;
             // 
             // listSearchResults
             // 
@@ -310,4 +323,3 @@ namespace MovInfoClient
         private System.Windows.Forms.Label txtPage;
     }
 }
-
