@@ -177,7 +177,7 @@ namespace MovInfoClient
             updateBookmarks();
         }
 
-        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        private void listBookmarks_DoubleClick(object sender, EventArgs e)
         {
             string loadBookmark = listBookmarks.SelectedItem.ToString();
             loadBookmark = loadBookmark.Substring(0, loadBookmark.Length - 6);
@@ -207,7 +207,7 @@ namespace MovInfoClient
             Properties.Settings.Default.bookmarks = bookmarks;
             Properties.Settings.Default.Save();
         }
-
+        
         private void btnSearchForward_Click(object sender, EventArgs e)
         {
             pageNo += 1;
