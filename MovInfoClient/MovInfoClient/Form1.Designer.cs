@@ -51,12 +51,13 @@ namespace MovInfoClient
             this.btnSearchBack = new System.Windows.Forms.Button();
             this.btnSearchForward = new System.Windows.Forms.Button();
             this.txtPage = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // buttonQuery
             // 
-            this.buttonQuery.Location = new System.Drawing.Point(627, 6);
+            this.buttonQuery.Location = new System.Drawing.Point(530, 6);
             this.buttonQuery.Name = "buttonQuery";
             this.buttonQuery.Size = new System.Drawing.Size(57, 28);
             this.buttonQuery.TabIndex = 0;
@@ -68,7 +69,7 @@ namespace MovInfoClient
             // 
             this.textBox1.Location = new System.Drawing.Point(77, 6);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(544, 42);
+            this.textBox1.Size = new System.Drawing.Size(447, 42);
             this.textBox1.TabIndex = 1;
             this.textBox1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox1_KeyDown);
             // 
@@ -272,11 +273,22 @@ namespace MovInfoClient
             this.txtPage.TabIndex = 20;
             this.txtPage.Text = "1";
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(593, 6);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(91, 28);
+            this.button1.TabIndex = 21;
+            this.button1.Text = "Random";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(17F, 35F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(927, 346);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.txtPage);
             this.Controls.Add(this.btnSearchForward);
             this.Controls.Add(this.btnSearchBack);
@@ -335,5 +347,6 @@ namespace MovInfoClient
         private System.Windows.Forms.Button btnSearchBack;
         private System.Windows.Forms.Button btnSearchForward;
         private System.Windows.Forms.Label txtPage;
+        private System.Windows.Forms.Button button1;
     }
 }

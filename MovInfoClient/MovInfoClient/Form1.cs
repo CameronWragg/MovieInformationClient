@@ -246,7 +246,7 @@ namespace MovInfoClient
             string loadBookmark = listBookmarks.SelectedItem.ToString();
             loadBookmark = loadBookmark.Substring(0, loadBookmark.Length);
             textBox1.Text = (loadBookmark);
-            comboBox1.SelectedItem = "Title";
+            comboBox1.SelectedIndex = 1;
             buttonQuery_Click(this, new EventArgs());
         }
 
@@ -255,7 +255,7 @@ namespace MovInfoClient
             string loadResult = listSearchResults.SelectedItem.ToString();
             loadResult = loadResult.Substring(0, loadResult.Length - 7);
             textBox1.Text = (loadResult);
-            comboBox1.SelectedItem = "Title";
+            comboBox1.SelectedIndex = 1;
             buttonQuery_Click(this, new EventArgs());
         }
 
@@ -275,7 +275,7 @@ namespace MovInfoClient
         private void btnSearchForward_Click(object sender, EventArgs e)
         {
             pageNo += 1;
-            comboBox1.SelectedItem = "Search";
+            comboBox1.SelectedIndex = 0;
             textBox1.Text = search;
             buttonQuery_Click(this, new EventArgs());
         }
@@ -283,8 +283,18 @@ namespace MovInfoClient
         private void btnSearchBack_Click(object sender, EventArgs e)
         {
             pageNo -= 1;
-            comboBox1.SelectedItem = "Search";
+            comboBox1.SelectedIndex = 0;
             textBox1.Text = search;
+            buttonQuery_Click(this, new EventArgs());
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Random r = new Random();
+            String id = "tt" + r.Next(0, 4633694).ToString("D6");
+
+            comboBox1.SelectedIndex = 2;
+            textBox1.Text = id;
             buttonQuery_Click(this, new EventArgs());
         }
     }
