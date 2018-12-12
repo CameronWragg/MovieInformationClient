@@ -35,7 +35,7 @@ namespace MovInfoClient
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.listBookmarks = new System.Windows.Forms.ListBox();
             this.button2 = new System.Windows.Forms.Button();
             this.titleLabel = new System.Windows.Forms.Label();
             this.releaseLabel = new System.Windows.Forms.Label();
@@ -43,6 +43,12 @@ namespace MovInfoClient
             this.genreLabel = new System.Windows.Forms.Label();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.label3 = new System.Windows.Forms.Label();
+            this.listSearchResults = new System.Windows.Forms.ListBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.txtResults = new System.Windows.Forms.Label();
+            this.btnSearchBack = new System.Windows.Forms.Button();
+            this.btnSearchForward = new System.Windows.Forms.Button();
+            this.txtPage = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -89,8 +95,9 @@ namespace MovInfoClient
             this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Items.AddRange(new object[] {
+            "Search",
             "Title",
-            "imdb ID"});
+            "imdbID"});
             this.comboBox1.Location = new System.Drawing.Point(530, 57);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(154, 25);
@@ -105,15 +112,15 @@ namespace MovInfoClient
             this.label2.TabIndex = 6;
             this.label2.Text = "Search Type:";
             // 
-            // listBox1
+            // listBookmarks
             // 
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.ItemHeight = 17;
-            this.listBox1.Location = new System.Drawing.Point(530, 177);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(154, 157);
-            this.listBox1.TabIndex = 7;
-            this.listBox1.DoubleClick += new System.EventHandler(this.listBox1_DoubleClick);
+            this.listBookmarks.FormattingEnabled = true;
+            this.listBookmarks.ItemHeight = 17;
+            this.listBookmarks.Location = new System.Drawing.Point(530, 177);
+            this.listBookmarks.Name = "listBookmarks";
+            this.listBookmarks.Size = new System.Drawing.Size(154, 157);
+            this.listBookmarks.TabIndex = 7;
+            this.listBookmarks.DoubleClick += new System.EventHandler(this.listBox1_DoubleClick);
             // 
             // button2
             // 
@@ -183,11 +190,76 @@ namespace MovInfoClient
             this.label3.TabIndex = 14;
             this.label3.Text = "Bookmarks:";
             // 
+            // listSearchResults
+            // 
+            this.listSearchResults.FormattingEnabled = true;
+            this.listSearchResults.ItemHeight = 17;
+            this.listSearchResults.Location = new System.Drawing.Point(690, 41);
+            this.listSearchResults.Name = "listSearchResults";
+            this.listSearchResults.Size = new System.Drawing.Size(225, 259);
+            this.listSearchResults.TabIndex = 15;
+            this.listSearchResults.SelectedIndexChanged += new System.EventHandler(this.listSearchResults_SelectedIndexChanged);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(691, 9);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(104, 17);
+            this.label4.TabIndex = 16;
+            this.label4.Text = "No. of Results:";
+            // 
+            // txtResults
+            // 
+            this.txtResults.AutoSize = true;
+            this.txtResults.Location = new System.Drawing.Point(802, 9);
+            this.txtResults.Name = "txtResults";
+            this.txtResults.Size = new System.Drawing.Size(83, 17);
+            this.txtResults.TabIndex = 17;
+            this.txtResults.Text = "placeholder";
+            // 
+            // btnSearchBack
+            // 
+            this.btnSearchBack.Enabled = false;
+            this.btnSearchBack.Location = new System.Drawing.Point(691, 307);
+            this.btnSearchBack.Name = "btnSearchBack";
+            this.btnSearchBack.Size = new System.Drawing.Size(75, 23);
+            this.btnSearchBack.TabIndex = 18;
+            this.btnSearchBack.Text = "<";
+            this.btnSearchBack.UseVisualStyleBackColor = true;
+            this.btnSearchBack.Click += new System.EventHandler(this.btnSearchBack_Click);
+            // 
+            // btnSearchForward
+            // 
+            this.btnSearchForward.Enabled = false;
+            this.btnSearchForward.Location = new System.Drawing.Point(840, 307);
+            this.btnSearchForward.Name = "btnSearchForward";
+            this.btnSearchForward.Size = new System.Drawing.Size(75, 23);
+            this.btnSearchForward.TabIndex = 19;
+            this.btnSearchForward.Text = ">";
+            this.btnSearchForward.UseVisualStyleBackColor = true;
+            this.btnSearchForward.Click += new System.EventHandler(this.btnSearchForward_Click);
+            // 
+            // txtPage
+            // 
+            this.txtPage.AutoSize = true;
+            this.txtPage.Location = new System.Drawing.Point(793, 310);
+            this.txtPage.Name = "txtPage";
+            this.txtPage.Size = new System.Drawing.Size(16, 17);
+            this.txtPage.TabIndex = 20;
+            this.txtPage.Text = "1";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(696, 346);
+            this.ClientSize = new System.Drawing.Size(927, 346);
+            this.Controls.Add(this.txtPage);
+            this.Controls.Add(this.btnSearchForward);
+            this.Controls.Add(this.btnSearchBack);
+            this.Controls.Add(this.txtResults);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.listSearchResults);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.richTextBox1);
             this.Controls.Add(this.genreLabel);
@@ -195,7 +267,7 @@ namespace MovInfoClient
             this.Controls.Add(this.releaseLabel);
             this.Controls.Add(this.titleLabel);
             this.Controls.Add(this.button2);
-            this.Controls.Add(this.listBox1);
+            this.Controls.Add(this.listBookmarks);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.pictureBox1);
@@ -222,7 +294,7 @@ namespace MovInfoClient
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.ListBox listBookmarks;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Label titleLabel;
         private System.Windows.Forms.Label releaseLabel;
@@ -230,6 +302,12 @@ namespace MovInfoClient
         private System.Windows.Forms.Label genreLabel;
         private System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.ListBox listSearchResults;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label txtResults;
+        private System.Windows.Forms.Button btnSearchBack;
+        private System.Windows.Forms.Button btnSearchForward;
+        private System.Windows.Forms.Label txtPage;
     }
 }
 
