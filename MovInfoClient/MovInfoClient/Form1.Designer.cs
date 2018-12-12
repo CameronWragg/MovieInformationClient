@@ -120,7 +120,7 @@ namespace MovInfoClient
             this.listBookmarks.Name = "listBookmarks";
             this.listBookmarks.Size = new System.Drawing.Size(154, 157);
             this.listBookmarks.TabIndex = 7;
-            this.listBookmarks.DoubleClick += new System.EventHandler(this.listBox1_DoubleClick);
+            this.listBookmarks.DoubleClick += new System.EventHandler(this.listBookmarks_DoubleClick);
             // 
             // button2
             // 
