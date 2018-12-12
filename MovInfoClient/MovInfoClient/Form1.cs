@@ -42,82 +42,78 @@ namespace MovInfoClient
             switch (comboBox2.SelectedIndex)
             {
                 case 0: //OMDb SECTION
-                        IWebDriver driver = new FirefoxDriver(dService, dOptions);
-                        switch (comboBox1.SelectedIndex)
-                        {
-                            case 0:
-                                    driver.Url = ("http://www.omdbapi.com/?t=" + textBox1.Text + getApi.omdbApiKey);
-                                    break;
-                            case 1:
-                                    driver.Url = ("http://www.omdbapi.com/?i=" + textBox1.Text + getApi.omdbApiKey);
-                                    break;
-                        }
+                    IWebDriver driver = new FirefoxDriver(dService, dOptions);
+                    switch (comboBox1.SelectedIndex)
+                    {
+                        case 0:
+                                driver.Url = ("http://www.omdbapi.com/?t=" + textBox1.Text + getApi.omdbApiKey);
+                                break;
+                        case 1:
+                                driver.Url = ("http://www.omdbapi.com/?i=" + textBox1.Text + getApi.omdbApiKey);
+                                break;
+                    }
 
-                        currentSource = driver.FindElement(By.Id("json")).Text;
-                        try
-                        {
-                            dbResponse = JsonConvert.DeserializeObject<dbInfo>(currentSource);
-                            titleLabel.Text = dbResponse.title;
-                            if (dbResponse.poster != null) { pictureBox1.LoadAsync(dbResponse.poster); }
-                            releaseLabel.Text = (dbResponse.Released);
-                            runtimeLabel.Text = (dbResponse.runtime);
-                            genreLabel.Text = (dbResponse.genre);
-                            richTextBox1.Text = (dbResponse.plot);
+                    currentSource = driver.FindElement(By.Id("json")).Text;
+                    try
+                    {
+                        dbResponse = JsonConvert.DeserializeObject<dbInfo>(currentSource);
+                        titleLabel.Text = dbResponse.title;
+                        if (dbResponse.poster != null) { pictureBox1.LoadAsync(dbResponse.poster); }
+                        releaseLabel.Text = (dbResponse.Released);
+                        runtimeLabel.Text = (dbResponse.runtime);
+                        genreLabel.Text = (dbResponse.genre);
+                        richTextBox1.Text = (dbResponse.plot);
 
-                        }
-                        catch
-                        {
-                            MessageBox.Show("Title not found, or there was an error. Try again", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Title not found, or there was an error. Try again", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
 
-                        driver.Quit();
-                        break;
+                    driver.Quit();
+                    break;
                         
                 case 1: //TMDb SECTION
-                        Uri homeAddr = new Uri("https://api.themoviedb.org/3/");
-                        RestRequest tmdbRequest = new RestRequest(Method.GET);
-                        tmdbRequest.RequestFormat = DataFormat.Json;
-                        IRestResponse tmdbResponse;
+                    Uri homeAddr = new Uri("https://api.themoviedb.org/3/");
+                    RestRequest tmdbRequest = new RestRequest(Method.GET);
+                    tmdbRequest.RequestFormat = DataFormat.Json;
+                    IRestResponse tmdbResponse;
                         
-                        switch (comboBox1.SelectedIndex)
-                        {
+                    switch (comboBox1.SelectedIndex)
+                    {
                         case 0:
-                                //RestClient tmdbClient = new RestClient(homeAddr + "search/movie?include_adult=false&page=1&query=" + textBox1.Text + getApi.tmdbApiKey);
+                            RestClient tmdbClient = new RestClient(homeAddr + "search/movie" + getApi.tmdbApiKey + "&language=en-US&query=" + textBox1.Text + "&page=1&include_adult=false");
+                            tmdbResponse = tmdbClient.Execute(tmdbRequest);
+                            MovieSearchResult tmdbResp = JsonConvert.DeserializeObject<MovieSearchResult>(tmdbResponse.Content);
 
-                                //tmdbRequest.AddParameter("title", "value");
-                                
-                                //tmdbResponse = tmdbClient.Execute(tmdbRequest);
-                                //Movie tmdbResp = JsonConvert.DeserializeObject<Movie>(tmdbResponse.Content);
+                            titleLabel.Text = tmdbResp.results[0].title;
+                            releaseLabel.Text = tmdbResp.results[0].release_date;
+                            if (tmdbResp.results[0].poster_path != null)
+                            {
+                                pictureBox1.LoadAsync("http://image.tmdb.org/t/p/w300//" + tmdbResp.results[0].poster_path);
+                            }
 
-                                //titleLabel.Text = tmdbResp.title;
-                                //releaseLabel.Text = tmdbResp.release_date;
+                            richTextBox1.Text = tmdbResp.results[0].overview;
 
-                                //if (tmdbResp.poster_path != null)
-                                //{
-                                //    pictureBox1.LoadAsync("http://image.tmdb.org/t/p/w300//" + tmdbResp.poster_path);
-                                //}
-
-                                //richTextBox1.Text = tmdbResp.overview;
-
-                                break;
+                            break;
 
                         case 1:
-                                RestClient tmdbIdClient = new RestClient(homeAddr + "" + textBox1.Text + getApi.tmdbApiKey);
-                                tmdbResponse = tmdbIdClient.Execute(tmdbRequest);
-                                MovieResult tmdbIdResp = JsonConvert.DeserializeObject<MovieResult>(tmdbResponse.Content);
+                            RestClient tmdbIdClient = new RestClient(homeAddr + "find/" + textBox1.Text + getApi.tmdbApiKey + "&language=en-US&external_source=imdb_id");
+                            tmdbResponse = tmdbIdClient.Execute(tmdbRequest);
+                            MovieResult tmdbIdResp = JsonConvert.DeserializeObject<MovieResult>(tmdbResponse.Content);
                                 
-                                titleLabel.Text = tmdbIdResp.title;
-                                releaseLabel.Text = tmdbIdResp.release_date;
-                                if (tmdbIdResp.poster_path != null)
-                                {
-                                    pictureBox1.LoadAsync("http://image.tmdb.org/t/p/w300//" + tmdbIdResp.poster_path);
-                                }
+                            titleLabel.Text = tmdbIdResp.movie_results[0].title;
+                            releaseLabel.Text = tmdbIdResp.movie_results[0].release_date;
+                            if (tmdbIdResp.movie_results[0].poster_path != null)
+                            {
+                                pictureBox1.LoadAsync("http://image.tmdb.org/t/p/w300//" + tmdbIdResp.movie_results[0].poster_path);
+                            }
 
-                                richTextBox1.Text = tmdbIdResp.overview;
+                            richTextBox1.Text = tmdbIdResp.movie_results[0].overview;
 
-                                break;
-                        }
-                        break;
+                            break;
+                    }
+                    break;
             }
         }
 
