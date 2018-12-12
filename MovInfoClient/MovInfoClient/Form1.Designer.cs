@@ -44,6 +44,7 @@ namespace MovInfoClient
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.listSearchResults = new System.Windows.Forms.ListBox();
             this.label4 = new System.Windows.Forms.Label();
             this.txtResults = new System.Windows.Forms.Label();
@@ -55,7 +56,7 @@ namespace MovInfoClient
             // 
             // buttonQuery
             // 
-            this.buttonQuery.Location = new System.Drawing.Point(627, 3);
+            this.buttonQuery.Location = new System.Drawing.Point(627, 6);
             this.buttonQuery.Name = "buttonQuery";
             this.buttonQuery.Size = new System.Drawing.Size(57, 28);
             this.buttonQuery.TabIndex = 0;
@@ -67,7 +68,7 @@ namespace MovInfoClient
             // 
             this.textBox1.Location = new System.Drawing.Point(77, 6);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(544, 25);
+            this.textBox1.Size = new System.Drawing.Size(544, 42);
             this.textBox1.TabIndex = 1;
             this.textBox1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox1_KeyDown);
             // 
@@ -76,7 +77,7 @@ namespace MovInfoClient
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(12, 9);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(59, 17);
+            this.label1.Size = new System.Drawing.Size(117, 35);
             this.label1.TabIndex = 3;
             this.label1.Text = "Search:";
             // 
@@ -101,7 +102,7 @@ namespace MovInfoClient
             "imdb ID"});
             this.comboBox1.Location = new System.Drawing.Point(530, 57);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(154, 25);
+            this.comboBox1.Size = new System.Drawing.Size(154, 43);
             this.comboBox1.TabIndex = 5;
             // 
             // label2
@@ -109,17 +110,17 @@ namespace MovInfoClient
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(530, 37);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(94, 17);
+            this.label2.Size = new System.Drawing.Size(189, 35);
             this.label2.TabIndex = 6;
             this.label2.Text = "Search Type:";
             // 
             // listBookmarks
             // 
             this.listBookmarks.FormattingEnabled = true;
-            this.listBookmarks.ItemHeight = 17;
+            this.listBookmarks.ItemHeight = 35;
             this.listBookmarks.Location = new System.Drawing.Point(530, 177);
             this.listBookmarks.Name = "listBookmarks";
-            this.listBookmarks.Size = new System.Drawing.Size(154, 157);
+            this.listBookmarks.Size = new System.Drawing.Size(154, 144);
             this.listBookmarks.TabIndex = 7;
             this.listBookmarks.DoubleClick += new System.EventHandler(this.listBookmarks_DoubleClick);
             // 
@@ -139,7 +140,7 @@ namespace MovInfoClient
             this.titleLabel.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.titleLabel.Location = new System.Drawing.Point(12, 38);
             this.titleLabel.Name = "titleLabel";
-            this.titleLabel.Size = new System.Drawing.Size(45, 16);
+            this.titleLabel.Size = new System.Drawing.Size(94, 32);
             this.titleLabel.TabIndex = 9;
             this.titleLabel.Text = "TITLE";
             this.titleLabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -150,7 +151,7 @@ namespace MovInfoClient
             this.releaseLabel.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.releaseLabel.Location = new System.Drawing.Point(12, 57);
             this.releaseLabel.Name = "releaseLabel";
-            this.releaseLabel.Size = new System.Drawing.Size(72, 15);
+            this.releaseLabel.Size = new System.Drawing.Size(138, 27);
             this.releaseLabel.TabIndex = 10;
             this.releaseLabel.Text = "placeholder";
             // 
@@ -160,7 +161,7 @@ namespace MovInfoClient
             this.runtimeLabel.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.runtimeLabel.Location = new System.Drawing.Point(169, 54);
             this.runtimeLabel.Name = "runtimeLabel";
-            this.runtimeLabel.Size = new System.Drawing.Size(72, 15);
+            this.runtimeLabel.Size = new System.Drawing.Size(138, 27);
             this.runtimeLabel.TabIndex = 11;
             this.runtimeLabel.Text = "placeholder";
             // 
@@ -170,7 +171,7 @@ namespace MovInfoClient
             this.genreLabel.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.genreLabel.Location = new System.Drawing.Point(12, 78);
             this.genreLabel.Name = "genreLabel";
-            this.genreLabel.Size = new System.Drawing.Size(72, 15);
+            this.genreLabel.Size = new System.Drawing.Size(138, 27);
             this.genreLabel.TabIndex = 12;
             this.genreLabel.Text = "placeholder";
             // 
@@ -187,7 +188,7 @@ namespace MovInfoClient
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(530, 157);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(86, 17);
+            this.label3.Size = new System.Drawing.Size(171, 35);
             this.label3.TabIndex = 14;
             this.label3.Text = "Bookmarks:";
             // 
@@ -200,16 +201,25 @@ namespace MovInfoClient
             "TMDb"});
             this.comboBox2.Location = new System.Drawing.Point(569, 88);
             this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(115, 25);
+            this.comboBox2.Size = new System.Drawing.Size(115, 43);
             this.comboBox2.TabIndex = 15;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(530, 91);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(65, 35);
+            this.label5.TabIndex = 16;
+            this.label5.Text = "DB:";
             // 
             // listSearchResults
             // 
             this.listSearchResults.FormattingEnabled = true;
-            this.listSearchResults.ItemHeight = 17;
+            this.listSearchResults.ItemHeight = 35;
             this.listSearchResults.Location = new System.Drawing.Point(690, 41);
             this.listSearchResults.Name = "listSearchResults";
-            this.listSearchResults.Size = new System.Drawing.Size(225, 259);
+            this.listSearchResults.Size = new System.Drawing.Size(225, 249);
             this.listSearchResults.TabIndex = 15;
             this.listSearchResults.SelectedIndexChanged += new System.EventHandler(this.listSearchResults_SelectedIndexChanged);
             // 
@@ -218,7 +228,7 @@ namespace MovInfoClient
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(691, 9);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(104, 17);
+            this.label4.Size = new System.Drawing.Size(209, 35);
             this.label4.TabIndex = 16;
             this.label4.Text = "No. of Results:";
             // 
@@ -227,7 +237,7 @@ namespace MovInfoClient
             this.txtResults.AutoSize = true;
             this.txtResults.Location = new System.Drawing.Point(802, 9);
             this.txtResults.Name = "txtResults";
-            this.txtResults.Size = new System.Drawing.Size(83, 17);
+            this.txtResults.Size = new System.Drawing.Size(169, 35);
             this.txtResults.TabIndex = 17;
             this.txtResults.Text = "placeholder";
             // 
@@ -258,13 +268,13 @@ namespace MovInfoClient
             this.txtPage.AutoSize = true;
             this.txtPage.Location = new System.Drawing.Point(793, 310);
             this.txtPage.Name = "txtPage";
-            this.txtPage.Size = new System.Drawing.Size(16, 17);
+            this.txtPage.Size = new System.Drawing.Size(32, 35);
             this.txtPage.TabIndex = 20;
             this.txtPage.Text = "1";
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(17F, 35F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(927, 346);
             this.Controls.Add(this.txtPage);
@@ -272,6 +282,8 @@ namespace MovInfoClient
             this.Controls.Add(this.btnSearchBack);
             this.Controls.Add(this.txtResults);
             this.Controls.Add(this.label4);
+            this.Controls.Add(this.comboBox2);
+            this.Controls.Add(this.label5);
             this.Controls.Add(this.listSearchResults);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.richTextBox1);
@@ -315,6 +327,8 @@ namespace MovInfoClient
         private System.Windows.Forms.Label genreLabel;
         private System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.Label label5;
         private System.Windows.Forms.ListBox listSearchResults;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label txtResults;

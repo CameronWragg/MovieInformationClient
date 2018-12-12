@@ -137,16 +137,7 @@ namespace MovInfoClient
                             releaseLabel.Text = (dbResponse.Released);
                             runtimeLabel.Text = (dbResponse.runtime);
                             genreLabel.Text = (dbResponse.genre);
-
-                            if (!bookmarks.Contains(dbResponse.title + " (" + dbResponse.year + ")"))
-                            {
-                                button2.Text = "Add to Bookmarks";
-                            }
-                            else
-                            {
-                                button2.Text = "Remove from Bookmarks";
-                            }
-
+                            richTextBox1.Text = dbResponse.plot;
                         }
                         catch
                         {
@@ -165,7 +156,7 @@ namespace MovInfoClient
                         
                     switch (comboBox1.SelectedIndex)
                     {
-                        case 0:
+                        case 1:
                             RestClient tmdbClient = new RestClient(homeAddr + "search/movie" + getApi.tmdbApiKey + "&language=en-US&query=" + textBox1.Text + "&page=1&include_adult=false");
                             tmdbResponse = tmdbClient.Execute(tmdbRequest);
                             MovieSearchResult tmdbResp = JsonConvert.DeserializeObject<MovieSearchResult>(tmdbResponse.Content);
@@ -181,7 +172,7 @@ namespace MovInfoClient
 
                             break;
 
-                        case 1:
+                        case 2:
                             RestClient tmdbIdClient = new RestClient(homeAddr + "find/" + textBox1.Text + getApi.tmdbApiKey + "&language=en-US&external_source=imdb_id");
                             tmdbResponse = tmdbIdClient.Execute(tmdbRequest);
                             MovieResult tmdbIdResp = JsonConvert.DeserializeObject<MovieResult>(tmdbResponse.Content);
@@ -199,6 +190,15 @@ namespace MovInfoClient
                     }
                     break;
             }
+
+            if (!bookmarks.Contains(titleLabel.Text))
+            {
+                button2.Text = "Add to Bookmarks";
+            }
+            else
+            {
+                button2.Text = "Remove from Bookmarks";
+            }
         }
 
         private void textBox1_KeyDown(object sender, KeyEventArgs e)
@@ -211,14 +211,14 @@ namespace MovInfoClient
 
         private void button2_Click(object sender, EventArgs e)
         {
-            if (!bookmarks.Contains(dbResponse.title + " (" + dbResponse.year + ")"))
+            if (!bookmarks.Contains(dbResponse.title))
             { 
-                bookmarks.Add(dbResponse.title + " (" + dbResponse.year + ")");
+                bookmarks.Add(dbResponse.title);
                 button2.Text = "Remove from Bookmarks";
             }
             else
             {
-                bookmarks.Remove(dbResponse.title + " (" + dbResponse.year + ")");
+                bookmarks.Remove(dbResponse.title);
                 button2.Text = "Add to Bookmarks";
             }
             updateBookmarks();
@@ -227,7 +227,7 @@ namespace MovInfoClient
         private void listBookmarks_DoubleClick(object sender, EventArgs e)
         {
             string loadBookmark = listBookmarks.SelectedItem.ToString();
-            loadBookmark = loadBookmark.Substring(0, loadBookmark.Length - 6);
+            loadBookmark = loadBookmark.Substring(0, loadBookmark.Length);
             textBox1.Text = (loadBookmark);
             comboBox1.SelectedItem = "Title";
             buttonQuery_Click(this, new EventArgs());
@@ -236,7 +236,7 @@ namespace MovInfoClient
         private void listSearchResults_SelectedIndexChanged(object sender, EventArgs e)
         {
             string loadResult = listSearchResults.SelectedItem.ToString();
-            loadResult = loadResult.Substring(0, loadResult.Length - 6);
+            loadResult = loadResult.Substring(0, loadResult.Length - 7);
             textBox1.Text = (loadResult);
             comboBox1.SelectedItem = "Title";
             buttonQuery_Click(this, new EventArgs());
